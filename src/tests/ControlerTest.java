@@ -21,6 +21,7 @@ class ControlerTest {
         assertEquals("Rakvere", cordinates);
     }
     @Test
+
     void getCoordinatesWithColons() {
         Controler controler =  new Controler();
         controler.setCity("Tallinn");
