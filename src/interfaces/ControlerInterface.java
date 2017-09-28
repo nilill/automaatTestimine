@@ -8,4 +8,5 @@ public interface ControlerInterface {
 
     public String getCoordinates();
 
+
 }
