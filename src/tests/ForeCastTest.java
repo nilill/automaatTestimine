@@ -11,7 +11,7 @@ class ForeCastTest {
     @Test
     void getForecast() {
         ForeCast foreCast = new ForeCast("Tallinn");
-        String fore = foreCast.getForecast();
+        String fore = foreCast.getForecast(0);
         assertEquals(24, fore.length());
     }
     @Test

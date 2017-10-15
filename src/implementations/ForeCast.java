@@ -1,13 +1,17 @@
 package implementations;
 
 public class ForeCast implements interfaces.ForeCastInterface {
+    private String url;
+    private JsonReadWrite jsonReadWrite;
+    public ForeCast(String url) {
+        this.url = url;
+        jsonReadWrite =  new JsonReadWrite(url);
 
-    public ForeCast(String city) {
 
     }
     @Override
-    public String getForecast() {
-        return null;
+    public String getForecast(int day) {
+        return jsonReadWrite.getListType(day);
     }
 
     @Override

@@ -1,6 +1,5 @@
 package tests;
 
-import net.aksingh.owmjapis.OpenWeatherMap;
 import org.junit.Test;
 
 import java.io.IOException;
@@ -11,9 +10,8 @@ import static org.junit.Assert.assertEquals;
 
 public class HTTPTest {
     public static String authCode;
-    public static OpenWeatherMap.Units unit = OpenWeatherMap.Units.METRIC;
     public static String city = "Tallinn";
-    private static OpenWeatherMap engine;
+
 
 
     @Test
