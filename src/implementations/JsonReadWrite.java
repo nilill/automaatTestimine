@@ -3,15 +3,17 @@ package implementations;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import java.io.InputStream;
+import java.io.*;
 import java.net.URL;
-import java.time.LocalDate;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 public class JsonReadWrite {
-    private String jsonstring;
+
     private JSONObject jObject;
 
-    public JsonReadWrite(String url) {
+    JsonReadWrite(String url) {
         StringBuilder sb = new StringBuilder();
         InputStream inStream = null;
         try {
@@ -19,69 +21,59 @@ public class JsonReadWrite {
             inStream = link.openStream();
             int i;
             byte[] buffer = new byte[8 * 1024];
-            while((i=inStream.read(buffer)) != -1)
-            {
-                sb.append(new String(buffer,0,i));
+            while ((i = inStream.read(buffer)) != -1) {
+                sb.append(new String(buffer, 0, i));
             }
+            jObject = new JSONObject(sb.toString());
+        } catch (Exception e) {
+            throw new IllegalArgumentException("Wrong url");
         }
-        catch(Exception e ) {
-            System.out.println("Unhandled exception in programm code");
-        }
-        jsonstring = sb.toString();
-        jObject = new JSONObject(sb.toString());
+
     }
 
-
-
-    public Double getDoubleType(String arrayt) {
-        return jObject.getDouble(arrayt);
-    }
-
-    public Double getDoubleType(String array, String sublist) {
+    Double getDoubleDepthTwo(String array, String sublist) {
         JSONObject geoObject = jObject.getJSONObject(array);
         return geoObject.getDouble(sublist);
     }
 
-    public String getStringType(String list, String list2) {
+    String getStringDepthTwo(String list, String list2) {
         JSONObject geoObject = jObject.getJSONObject(list);
         return geoObject.getString(list2);
     }
-    public String getStringType(String name) {
+
+    String getStringDepthOne(String name) {
         return jObject.getString(name);
     }
 
-    public String getListType(int day) {
-        Double mintemp = Double.MAX_VALUE;
-        Double maxtemp = Double.MIN_VALUE;
-        boolean canMoveObjects = false;
-        JSONArray jArray = (JSONArray)jObject.get("list");
-        String dayWanted = LocalDate.now().plusDays(day).toString();
+    JSONArray getListType() {
+        JSONArray jArray = (JSONArray) jObject.get("list");
+        return jArray;
+    }
 
-        if (jArray != null) {
-            for (int i=0;i<jArray.length();i++){
-                JSONObject elementInJSONarray = new JSONObject(jArray.get(i).toString());
-                String dt_txt = elementInJSONarray.getString("dt_txt").substring(0, 10);
-                if (dt_txt.equals(dayWanted)) {
-                    canMoveObjects = true;
-                }
-                if (!dt_txt.equals(dayWanted)) {
-                    canMoveObjects = false;
-                }
-                if (canMoveObjects) {
-                    JSONObject first = new JSONObject(jArray.get(i).toString());
-                    JSONObject main = new JSONObject(first.get("main").toString());
-                    System.out.println(first);
-                    System.out.println(main);
-                    if (main.getDouble("temp_min") - 273.15 < mintemp) {
-                        mintemp = main.getDouble("temp_min") - 273.15;
-                    }
-                    if (main.getDouble("temp_max") - 273.15 > maxtemp) {
-                        maxtemp = main.getDouble("temp_max") - 273.15;
-                    }
-                }
+    static void writeToFile(String text){
+        Path path = Paths.get("D:\\Programeerimine\\Automaattestimine\\automaatTestimine", "info.txt");
+        try (BufferedWriter writer = Files.newBufferedWriter(path)) {
+            writer.write(text);
+            writer.close();
+        } catch (IOException e) {
+            System.out.println("IOException:" + e.getMessage());
+            e.printStackTrace();
+        }
+    }
+
+    static String readCityOutput(String path){
+        if (!new File(path).exists()) {
+            System.out.println("No such file, City set to default: Tallinn.");
+            return null;
+        } else {
+            Path path1 = Paths.get(path);
+            try (BufferedReader reader = Files.newBufferedReader(Paths.get(path))) {
+                return reader.readLine();
+            } catch (IOException  e) {
+                e.printStackTrace();
             }
         }
-        return mintemp.toString() + "/" + maxtemp.toString();
+        return null;
     }
 
 }

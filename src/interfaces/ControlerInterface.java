@@ -7,6 +7,4 @@ public interface ControlerInterface {
     public String getCity();
 
     public String getCoordinates();
-
-
 }

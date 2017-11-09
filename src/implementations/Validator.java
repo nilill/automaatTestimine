@@ -9,7 +9,7 @@ public class Validator implements ValidatorInterface {
     }
 
     @Override
-    public boolean validateTemp(int temp) {
+    public boolean validateTemp(String temp) {
         return false;
     }
 
