@@ -1,24 +1,18 @@
 package implementations.dataOperations;
 
 
-import implementations.controller.Controler;
 import org.json.JSONObject;
-import org.junit.Before;
 import org.junit.Test;
+import org.mockito.Mock;
 
 import static org.junit.Assert.assertEquals;
+import static org.mockito.Mockito.mock;
 
 public class GetJsonObjectFromApiTest {
 
-
-    private Controler controler;
-
-    @Before
-    public void setup() {
-        JSONObject current = MockGetJsonObjectFromApi.getCurrentWeatherJson();
-        JSONObject forecast = MockGetJsonObjectFromApi.getForecastWeatherJson();
-        this.controler = new Controler(current, forecast, null);
-    }
+    @Mock
+    private
+    WriteToFile writeToFile = mock(WriteToFile.class);
 
     @Test
     public void getJsonObject() throws Exception {

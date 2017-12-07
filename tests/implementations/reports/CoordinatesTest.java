@@ -1,23 +1,32 @@
 package implementations.reports;
 
 import implementations.controller.Controler;
+import implementations.dataOperations.GetJsonObjectFromApi;
 import implementations.dataOperations.MockGetJsonObjectFromApi;
-import org.json.JSONObject;
+import implementations.dataOperations.WriteToFile;
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.Mock;
 
 import static org.junit.Assert.assertEquals;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 public class CoordinatesTest {
-
+    
+    @Mock
+    private
+    WriteToFile writeToFile = mock(WriteToFile.class);
 
     private Controler controler;
 
     @Before
     public void setup() {
-        JSONObject current = MockGetJsonObjectFromApi.getCurrentWeatherJson();
-        JSONObject forecast = MockGetJsonObjectFromApi.getForecastWeatherJson();
-        this.controler = new Controler(current, forecast, null);
+        GetJsonObjectFromApi current = mock(GetJsonObjectFromApi.class);
+        GetJsonObjectFromApi forecast = mock(GetJsonObjectFromApi.class);
+        when((forecast).getJsonObject()).thenReturn(MockGetJsonObjectFromApi.getForecastWeatherJson());
+        when((current).getJsonObject()).thenReturn(MockGetJsonObjectFromApi.getCurrentWeatherJson());
+        this.controler = new Controler(current.getJsonObject(), forecast.getJsonObject(), writeToFile);
     }
 
     @Test

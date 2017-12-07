@@ -1,6 +1,5 @@
 package implementations.dataOperations;
 
-import implementations.controller.Controler;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.junit.Before;
@@ -9,16 +8,14 @@ import org.junit.Test;
 import static org.junit.Assert.assertEquals;
 
 public class GetDataTypesFromJsonObjectTest {
-    private Controler controler;
-    JSONObject current;
-    JSONObject forecast;
 
+    private JSONObject current;
+    private JSONObject forecast;
 
     @Before
     public void setUp() {
         current = MockGetJsonObjectFromApi.getCurrentWeatherJson();
         forecast = MockGetJsonObjectFromApi.getForecastWeatherJson();
-        this.controler = new Controler(current, forecast, null);
     }
 
     @Test

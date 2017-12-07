@@ -15,7 +15,8 @@ public class UserInputFromFileTest {
         BufferedReader br;
         String city = null;
         try {
-            br  = new BufferedReader(new InputStreamReader(new FileInputStream("D:\\Programeerimine\\Automaattestimine\\automaatTestimine\\tests\\testTextFiles\\input.txt")));
+            br  = new BufferedReader(new InputStreamReader(new FileInputStream(
+                    "D:\\Programeerimine\\Automaattestimine\\automaatTestimine\\tests\\testTextFiles\\input.txt")));
             city = UserInputFromFile.getUserInput(br);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
