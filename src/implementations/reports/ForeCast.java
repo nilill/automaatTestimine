@@ -1,7 +1,8 @@
 package implementations.reports;
 
-import implementations.dataOperations.JsonObjectOperator;
+import implementations.dataOperations.GetDataTypesFromJsonObject;
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.math.BigDecimal;
@@ -10,14 +11,17 @@ import java.time.LocalDate;
 import java.util.Objects;
 
 public class ForeCast {
-    private JsonObjectOperator jsonObjectOperator;
 
-    public ForeCast(String url) {
-        jsonObjectOperator = new JsonObjectOperator(url);
+
+    private JSONObject jsonObject;
+
+    public ForeCast(JSONObject jsonObject) {
+        this.jsonObject = jsonObject;
     }
 
-    private String getMinMaxTemp(int day, String minOrMax) {
-        JSONArray jArray = jsonObjectOperator.getListType();
+    private String getMinMaxTemp(int day, String minOrMax){
+
+        JSONArray jArray = GetDataTypesFromJsonObject.getListType(jsonObject);
         Double temp = (minOrMax.equals("temp_min")) ? Double.MAX_VALUE : Double.MIN_VALUE;
         boolean canMoveObjects;
         String dayWanted = LocalDate.now().plusDays(day).toString();
@@ -43,7 +47,7 @@ public class ForeCast {
         return minMax.toString().substring(0, 3);
     }
 
-    public String getForecast(int day) {
+    public String getForecast(int day) throws JSONException {
         String result = "";
         for (int i = 1; i < 4; i++) {
             result += "Day " + i + ")" + stringBuilder(i) + "   ";
@@ -51,7 +55,7 @@ public class ForeCast {
         return result;
     }
 
-    private String stringBuilder(int day) {
+    private String stringBuilder(int day) throws JSONException {
         String mintemp = getMinMaxTemp(day, "temp_min");
         String maxTemp = getMinMaxTemp(day, "temp_max");
         Boolean validTemp = Validator.validateTemp(mintemp) && Validator.validateTemp(maxTemp);

@@ -1,15 +1,14 @@
 package implementations.reports;
 
-import implementations.dataOperations.JsonObjectOperator;
+import implementations.dataOperations.GetDataTypesFromJsonObject;
+import org.json.JSONObject;
 
 public class Coordinates {
 
-    private static Validator validator = new Validator();
+    public static String getCoordinates(JSONObject jsonObject) {
 
-    public static String getCoordinates(String url) {
-        JsonObjectOperator jsonfile =  new JsonObjectOperator(url);
-        double lon = jsonfile.getDoubleDepthTwo("coord", "lon");
-        double lat = jsonfile.getDoubleDepthTwo("coord", "lat");
+        double lon = GetDataTypesFromJsonObject.getDoubleDepthTwo("coord", "lon", jsonObject);
+        double lat = GetDataTypesFromJsonObject.getDoubleDepthTwo("coord", "lat", jsonObject);
         boolean correctGeo = Validator.validateGEO(lon) && Validator.validateGEO(lat);
         return (correctGeo) ? "Coordinates: " + Double.toString(lon) + "/" +  Double.toString(lat)
                 : "No GEO coordinates are to be given";

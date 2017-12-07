@@ -1,20 +1,25 @@
 package implementations;
 
+import implementations.controller.Controler;
+import implementations.dataOperations.GetJsonObjectFromApi;
+import implementations.dataOperations.WriteToFile;
+import org.json.JSONObject;
+
 public class main {
     public static void main(String[] args) {
-        Controler controler = new Controler();
+        WriteToFile filewriter = new WriteToFile();
+        String city = "Tallinn";
+        String appIdCurrent = "&appid=bb9800b5d5cb9957043c1c7764bbf1c0";
+        String url = "http://api.openweathermap.org/data/2.5/weather?q=";
+        String forecastUrl = "https://api.openweathermap.org/data/2.5/forecast?q=";
+        JSONObject currentWeatherJson = new GetJsonObjectFromApi(url + city + appIdCurrent).getJsonObject();
+        JSONObject forecastWeatherJson = new GetJsonObjectFromApi(forecastUrl + city + appIdCurrent).getJsonObject();
+
+        Controler controler = new Controler(currentWeatherJson, forecastWeatherJson, filewriter);
         controler.setCity("Tallinn");
-        String currentWeather = controler.getCurrentWeather();
-        String forecast = controler.getForecastWeather();
-        String coordinates = controler.getCoordinates();
-        JsonReadWrite.writeToFile(currentWeather +"\n"+ forecast + "\n"+ coordinates);
-        System.out.println(controler.getForecastWeather());
         System.out.println(controler.getCurrentWeather());
-        String path = ("D:\\Programeerimine\\Automaattestimine\\automaatTestimine\\doesNotExist.txt");
-        controler.setCityFromFile(path);
-        controler.setCityFromConsole();
-
-
+        System.out.println(controler.getForecastWeather());
+        System.out.println();
     }
 
 }

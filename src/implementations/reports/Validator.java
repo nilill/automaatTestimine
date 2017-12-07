@@ -1,8 +1,6 @@
 package implementations.reports;
 
-import interfaces.ValidatorInterface;
-
-class Validator implements ValidatorInterface {
+class Validator {
 
     static boolean validateGEO(double geo) {
         return geo > 0 && geo < 180;

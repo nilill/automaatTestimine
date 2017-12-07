@@ -1,0 +1,4 @@
+Narva
+Coordinates: 28.19/59.38
+Current temperature: 4.57°
+Forecast: Day 1)2.4°/4.6°   Day 2)2.4°/4.8°   Day 3)1.4°/3.8°   

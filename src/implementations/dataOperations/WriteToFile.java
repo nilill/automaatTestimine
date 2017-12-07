@@ -4,7 +4,7 @@ import java.io.*;
 
 public class WriteToFile {
 
-    public static void write(String text, String city) {
+    public void write(String text, String city) {
         try (Writer writer = new BufferedWriter(new OutputStreamWriter(
                 new FileOutputStream("D:\\Programeerimine\\Automaattestimine\\automaatTestimine\\src\\textfiles\\" + city + ".txt"), "utf-8"))) {
             writer.write(text);
