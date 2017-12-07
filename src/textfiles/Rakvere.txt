@@ -1,4 +1,0 @@
-Tallinn
-Coordinates: 24.75/59.44
-Current weather: 5.0 C
-Forecast: Min:3.2/Max:6.0

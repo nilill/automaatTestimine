@@ -5,14 +5,12 @@ import java.io.IOException;
 
 public class UserInputFromFile {
 
-    public static String getUserInput(final BufferedReader bufferedReader){
+    public static String getUserInput(final BufferedReader bufferedReader) {
         try {
-            String city = bufferedReader.readLine();
-            return city;
+            return bufferedReader.readLine();
         } catch (IOException e) {
             e.printStackTrace();
         }
         return null;
-
     }
 }

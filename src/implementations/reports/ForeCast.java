@@ -19,7 +19,7 @@ public class ForeCast {
         this.jsonObject = jsonObject;
     }
 
-    private String getMinMaxTemp(int day, String minOrMax){
+    private String getMinMaxTemp(int day, String minOrMax) {
 
         JSONArray jArray = GetDataTypesFromJsonObject.getListType(jsonObject);
         Double temp = (minOrMax.equals("temp_min")) ? Double.MAX_VALUE : Double.MIN_VALUE;
@@ -47,7 +47,7 @@ public class ForeCast {
         return minMax.toString().substring(0, 3);
     }
 
-    public String getForecast(int day) throws JSONException {
+    public String getForecast() throws JSONException {
         String result = "";
         for (int i = 1; i < 4; i++) {
             result += "Day " + i + ")" + stringBuilder(i) + "   ";

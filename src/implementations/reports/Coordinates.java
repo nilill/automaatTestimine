@@ -10,7 +10,7 @@ public class Coordinates {
         double lon = GetDataTypesFromJsonObject.getDoubleDepthTwo("coord", "lon", jsonObject);
         double lat = GetDataTypesFromJsonObject.getDoubleDepthTwo("coord", "lat", jsonObject);
         boolean correctGeo = Validator.validateGEO(lon) && Validator.validateGEO(lat);
-        return (correctGeo) ? "Coordinates: " + Double.toString(lon) + "/" +  Double.toString(lat)
+        return (correctGeo) ? "Coordinates: " + Double.toString(lon) + "/" + Double.toString(lat)
                 : "No GEO coordinates are to be given";
     }
 }

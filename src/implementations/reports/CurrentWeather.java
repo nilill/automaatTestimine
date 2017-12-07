@@ -2,6 +2,7 @@ package implementations.reports;
 
 import implementations.dataOperations.GetDataTypesFromJsonObject;
 import org.json.JSONObject;
+
 import java.math.BigDecimal;
 import java.math.MathContext;
 import java.math.RoundingMode;
@@ -16,7 +17,6 @@ public class CurrentWeather implements interfaces.CurrentWeatherInterface {
 
     @Override
     public String getCurrentWeather() {
-
         Double kelvin = GetDataTypesFromJsonObject.getDoubleDepthTwo("main", "temp", jsonObject);
         Double celcsus = kelvin - 273.15;
         BigDecimal result = new BigDecimal(celcsus.toString());

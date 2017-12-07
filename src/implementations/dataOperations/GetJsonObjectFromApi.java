@@ -7,10 +7,13 @@ import java.net.URL;
 
 public class GetJsonObjectFromApi {
 
-    JSONObject jsonObject;
+    private String url;
 
-    public  GetJsonObjectFromApi(String url) {
+    public GetJsonObjectFromApi(String url) {
+        this.url = url;
+    }
 
+    public JSONObject getJsonObject() {
         StringBuilder sb = new StringBuilder();
         InputStream inStream = null;
         JSONObject jObject;
@@ -23,16 +26,10 @@ public class GetJsonObjectFromApi {
                 sb.append(new String(buffer, 0, i));
             }
             jObject = new JSONObject(sb.toString());
-            this.jsonObject = jObject;
-            System.out.println(jObject.toString());
         } catch (Exception e) {
             e.getStackTrace();
             throw new IllegalArgumentException("Wrong url");
         }
-
-    }
-
-    public JSONObject getJsonObject() {
-        return jsonObject;
+        return jObject;
     }
 }

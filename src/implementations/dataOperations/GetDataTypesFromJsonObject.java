@@ -5,7 +5,7 @@ import org.json.JSONObject;
 
 public class GetDataTypesFromJsonObject {
 
-    public static Double getDouble(String element, JSONObject jObject) {
+    static Double getDouble(String element, JSONObject jObject) {
         return jObject.getDouble(element);
     }
 
@@ -14,7 +14,7 @@ public class GetDataTypesFromJsonObject {
         return geoObject.getDouble(sublist);
     }
 
-    public static String getStringDepthTwo(String list, String list2, JSONObject jObject) {
+    static String getStringDepthTwo(String list, String list2, JSONObject jObject) {
         JSONObject geoObject = jObject.getJSONObject(list);
         return geoObject.getString(list2);
     }

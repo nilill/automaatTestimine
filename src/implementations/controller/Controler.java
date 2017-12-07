@@ -9,7 +9,6 @@ import implementations.userInput.UserInputFromFile;
 import interfaces.ControlerInterface;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -21,22 +20,18 @@ public class Controler implements ControlerInterface {
     private JSONObject currentWeatherJson;
     private JSONObject forecastWeatherJson;
     private String city = "Tallinn";
-    private String appIdCurrent = "&appid=bb9800b5d5cb9957043c1c7764bbf1c0";
-    private String url = "http://api.openweathermap.org/data/2.5/weather?q=";
-    private String forecastUrl = "https://api.openweathermap.org/data/2.5/forecast?q=";
     private boolean streamedOutput = false;
-    private WriteToFile writeToFile;
+    private WriteToFile fileWriter;
 
     public Controler(JSONObject currentWeatherJson, JSONObject forecastWeatherJson, WriteToFile writeToFile) {
         this.currentWeatherJson = currentWeatherJson;
         this.forecastWeatherJson = forecastWeatherJson;
-        this.writeToFile = writeToFile;
+        this.fileWriter = writeToFile;
         try {
             br = new BufferedReader(new InputStreamReader(new FileInputStream("D:\\Programeerimine\\Automaattestimine\\automaatTestimine\\src\\textfiles\\input.txt")));
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
-
     }
 
     public String getCity() {
@@ -44,6 +39,7 @@ public class Controler implements ControlerInterface {
     }
 
     public void setCity(String city) {
+        streamedOutput = false;
         this.city = city;
     }
 
@@ -58,35 +54,29 @@ public class Controler implements ControlerInterface {
     }
 
     public String getCoordinates() {
-        if (streamedOutput); // implement
         return Coordinates.getCoordinates(currentWeatherJson);
     }
 
     public String getCurrentWeather() throws JSONException {
-        if (streamedOutput); // implement
-        String statement = new CurrentWeather(currentWeatherJson).getCurrentWeather();
-        return statement + "°";
+        return new CurrentWeather(currentWeatherJson).getCurrentWeather() + "°";
     }
 
     public String getForecastWeather() throws JSONException {
-        if (streamedOutput); // implement
-        String forecastUrl = "https://api.openweathermap.org/data/2.5/forecast?q=";
-        return new ForeCast(forecastWeatherJson).getForecast(1);
+        return new ForeCast(forecastWeatherJson).getForecast();
     }
 
     public void saveDataToFile() throws JSONException {
         if (streamedOutput) {
-            saveDataToFileStream();
+            cityStream();
         } else {
-            writeToFile.write(getCity() + "\n" +
+            fileWriter.write(getCity() + "\n" +
                             getCoordinates() + "\n" +
                             "Current temperature: " + getCurrentWeather() + "\n" +
-                            "Forecast: " + getForecastWeather()
-                    , city);
+                            "Forecast: " + getForecastWeather(), city);
         }
     }
 
-    private void saveDataToFileStream() throws JSONException {
+    private void cityStream() throws JSONException {
         String line = UserInputFromFile.getUserInput(this.br);
         while (line != null) {
             this.city = line;
