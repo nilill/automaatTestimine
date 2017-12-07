@@ -1,0 +1,3 @@
+Tallinn: 0.0 C
+Min: 1.8/Max: 4.9
+Coordinates: 24.75/59.44
