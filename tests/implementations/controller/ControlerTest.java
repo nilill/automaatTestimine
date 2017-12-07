@@ -1,29 +1,35 @@
 package implementations.controller;
 
+import implementations.dataOperations.GetJsonObjectFromApi;
 import implementations.dataOperations.MockGetJsonObjectFromApi;
-import org.json.JSONObject;
+import implementations.dataOperations.WriteToFile;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.Mock;
+import org.mockito.junit.MockitoJUnitRunner;
 
 import static org.junit.Assert.assertEquals;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
-
+@RunWith(MockitoJUnitRunner.class)
 public class ControlerTest {
 
     private Controler controler;
 
+    @Mock
+    private
+    WriteToFile writeToFile = mock(WriteToFile.class);
+
     @Before
     public  void setup() {
-        JSONObject current = MockGetJsonObjectFromApi.getCurrentWeatherJson();
-        JSONObject forecast = MockGetJsonObjectFromApi.getForecastWeatherJson();
-
-        this.controler = new Controler(current, forecast, null);
-
-        //GetJsonObjectFromApi currentWeatherGetter = Mockito.mock(GetJsonObjectFromApi.class);
-        //whenNew(GetJsonObjectFromApi.class).withNoArguments().thenReturn(currentWeatherGetter);
-        //when(currentWeatherGetter.getJsonObject()).thenReturn(new JSONObject("{\"dt\":1512568200,\"coord\":{\"lon\":24.75,\"lat\":59.44},\"visibility\":10000,\"weather\":[{\"icon\":\"04n\",\"description\":\"broken clouds\",\"main\":\"Clouds\",\"id\":803}],\"name\":\"Tallinn\",\"cod\":200,\"main\":{\"temp\":274.15,\"temp_min\":274.15,\"humidity\":74,\"pressure\":1005,\"temp_max\":274.15},\"clouds\":{\"all\":75},\"id\":588409,\"sys\":{\"country\":\"EE\",\"sunrise\":1512543699,\"sunset\":1512566564,\"id\":5014,\"type\":1,\"message\":0.0024},\"base\":\"stations\",\"wind\":{\"deg\":320,\"speed\":5.7}}"));
+        GetJsonObjectFromApi current =  mock(GetJsonObjectFromApi.class);
+        GetJsonObjectFromApi forecast = mock(GetJsonObjectFromApi.class);
+        when((current).getJsonObject()).thenReturn(MockGetJsonObjectFromApi.getCurrentWeatherJson());
+        when((forecast).getJsonObject()).thenReturn(MockGetJsonObjectFromApi.getForecastWeatherJson());
+        this.controler = new Controler(current.getJsonObject(), forecast.getJsonObject(), writeToFile);
     }
-
 
     @Test
     public void setCity() {
